@@ -30,6 +30,8 @@ class TypeEffectiveness:
     Represents the type effectiveness of one Pokemon type against another.
     """
 
+    EFFECT_TABLE = {}
+
     @classmethod
     def get_effectiveness(cls, attack_type: PokeType, defend_type: PokeType) -> float:
         """
@@ -42,7 +44,15 @@ class TypeEffectiveness:
         Returns:
             float: The effectiveness of the attack, as a float value between 0 and 4.
         """
-        raise NotImplementedError
+
+        with open("type_effectiveness.csv") as file:
+            lines = file.readlines()
+            for line in lines:
+                line = line.strip().split(",")
+                if line[0] == attack_type.name and line[1] == defend_type.name:
+                    return float(line[2])
+        
+        return cls.EFFECT_TABLE[attack_type][defend_type]
 
     def __len__(self) -> int:
         """
