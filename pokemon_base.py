@@ -30,7 +30,22 @@ class TypeEffectiveness:
     Represents the type effectiveness of one Pokemon type against another.
     """
 
-    EFFECT_TABLE = {}
+    instance: Optional[TypeEffectiveness] = None
+
+    def __init__(self, pokenames: ArrayR[str], effectiveness_values: ArrayR[float]) -> None:
+        """
+        Initializes a new instance of the TypeEffectiveness class.
+        """
+        self.EFFECT_TABLE = {}
+        num_types = len(pokenames)
+        for i in range(num_types):
+            poke_i = pokenames[i].upper()
+            self.EFFECT_TABLE(poke_i) = {}
+        for j in range(num_types):
+            element_j = pokenames[j].upper()
+            index = i * num_types + j
+            self.EFFECT_TABLE[poke_i][element_j] = effectiveness_values[index]
+
 
     @classmethod
     def get_effectiveness(cls, attack_type: PokeType, defend_type: PokeType) -> float:
@@ -45,21 +60,17 @@ class TypeEffectiveness:
             float: The effectiveness of the attack, as a float value between 0 and 4.
         """
 
-        with open("type_effectiveness.csv") as file:
-            lines = file.readlines()
-            for line in lines:
-                line = line.strip().split(",")
-                if line[0] == attack_type.name and line[1] == defend_type.name:
-                    return float(line[2])
-        
-        return cls.EFFECT_TABLE[attack_type][defend_type]
-
+        if cls.istance is None:
+            cls.
+    
     def __len__(self) -> int:
         """
         Returns the number of types of Pokemon
         """
         raise NotImplementedError
 
+    @classmethod
+    def 
 
 class Pokemon(ABC): # pylint: disable=too-few-public-methods, too-many-instance-attributes
     """
